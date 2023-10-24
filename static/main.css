@@ -6,3 +6,6 @@
     color: #fefefe;
     padding: 24px 0;
 }
+.form-content-section {
+    max-width: 320px;
+}
