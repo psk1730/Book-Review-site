@@ -1,0 +1,160 @@
+{% extends "layout.html" %}
+ 
+{% block content %}
+<div class></div>
+<form action="" method="POST" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    <fieldset class="form-group">
+        <legend class="border-bottom mb-4">{{ title }}</legend>
+        <div class="form-row">
+            <!-- book title -->
+            <div class="form-group col-md-6">
+                {{ form.title.label(class="form-control-label") }}
+                {% if form.title.errors %}
+                {{ form.title(class="form-control is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.title.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.title(class="form-control") }}
+                {% endif %}
+            </div>
+            
+            <!-- author's name -->
+            <div class="form-group col-md-6">
+                {{ form.author.label(class="form-control-label") }}
+                {% if form.author.errors %}
+                {{ form.author(class="form-control is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.author.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.author(class="form-control") }}
+                {% endif %}
+            </div>
+             
+            <!-- isbn number -->
+            <div class="form-group col-md-6">
+                {{ form.isbn.label(class="form-control-label") }}
+                {% if form.isbn.errors %}
+                {{ form.isbn(class="form-control is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.isbn.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.isbn(class="form-control") }}
+                {% endif %}
+            </div>
+             
+            <!-- tag select field -->
+            <div class="form-group col-md-6">
+                {{ form.genre.label(class="form-control-label") }}
+                {{ form.genre(class="form-control") }}
+            </div>
+             
+            <!-- rating -->
+            <div class="form-group col-md-6">
+                {{ form.shop_link.label(class="form-control-label") }}
+                {% if form.shop_link.errors %}
+                {{ form.shop_link(class="form-control is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.shop_link.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.shop_link(class="form-control") }}
+                {% endif %}
+            </div>
+             
+            <!-- rating -->
+            <div class="form-group col-md-6">
+                {{ form.rating.label(class="form-control-label") }}
+                {% if form.rating.errors %}
+                {{ form.rating(class="form-control is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.rating.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.rating(class="form-control") }}
+                {% endif %}
+            </div>
+             
+            <!-- cover image file -->
+            <div class="form-group">
+                {{ form.cover_image_file.label(class="form-control-label") }}
+                {% if form.cover_image_file.errors %}
+                {{ form.cover_image_file(class="form-control-file is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.cover_image_file.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.cover_image_file(class="form-control-file") }}
+                {% endif %}
+            </div>
+        </div>
+
+       
+        <!-- tiny summary -->
+        <div class="form-group">
+            {{ form.tiny_summary.label(class="form-control-label") }}
+            {% if form.tiny_summary.errors %}
+            {{ form.tiny_summary(class="form-control is-invalid") }}
+            <div class="invalid-feedback">
+                {% for error in form.tiny_summary.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% else %}
+            {{ form.tiny_summary(class="form-control") }}
+            {% endif %}
+        </div>
+
+        <!-- submit button -->
+        <div class="form-group">
+            {{ form.submit(class="btn btn-info") }}
+            {% if book %}
+            <a href="{{ url_for('book.present', book_slug=book.title_slug) }}" class="btn btn-outline-secondary">Cancel</a>
+            <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteBookConfirm">
+                Delete Book
+            </button>
+            {% endif %}
+        </div>
+    </fieldset>
+</form>
+<!-- render only if book is passed -->
+{% if book %}
+<div class="modal fade" id="deleteBookConfirm" tabindex="-1" role="dialog" aria-labelledby="deleteBookConfirmModal"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Confirm Deletion</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete <strong>{{ book.book_title }}</strong>?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <form action="{{ url_for('book.delete', book_slug=book.title_slug) }}" method="POST">
+                    <input type="submit" class="btn btn-danger" value="Delete" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

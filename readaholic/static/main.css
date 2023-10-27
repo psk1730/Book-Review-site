@@ -9,3 +9,28 @@
 .form-content-section {
     max-width: 320px;
 }
+
+.division{
+    display: flex;
+    
+}
+
+.form-content{
+    width: 600px; 
+    margin: 0 auto;
+    padding: 15px;
+    border: 2px solid black;
+
+}
+
+.division-part-one{
+    margin-right: 25px;
+}
+.BH{
+	min-height: calc(100vh - 444px); 
+}
+.form-content{
+    margin-bottom: 20px;
+    width: 420px;
+}
+

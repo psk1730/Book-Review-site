@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+<!-- code here -->
+
+<div class="form-content mx-auto">
+  <form method="POST" action="">
+    <!-- Cross Site Request Foregery Token -->
+    {{ form.hidden_tag() }}
+    <fieldset class="form-group">
+      <legend class="border-bottom mb-4"><strong>Add a comment</strong></legend>
+        <div class="division">
+          <div class="division-part-one">
+            <div class="form-group">
+            {{ form.name.label(class="form-control-label") }} {{
+            form.name(class="form-control form-control-lg") }}
+            </div>
+            <div class="col-auto">
+              <span id="passwordHelpInline" class="form-text">
+                Optional
+              </span>
+            </div>
+          </div>
+          <div class="division-part-two">
+            <div class="form-group">
+            {{ form.email.label(class="form-control-label") }} {{
+            form.email(class="form-control form-control-lg") }}
+            </div>
+            <div class="col-auto">
+              <span id="passwordHelpInline" class="form-text">
+                Email is required but will not be published.
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="border-bottom mt-3 pt-3">
+          {{ form.comment.label(class="form-control-label") }} {{
+            form.comment(class="form-control form-control-lg") }}
+        </div>
+    </fieldset>
+    <div class="form-group mt-3">
+      {{ form.submit(class="btn btn-outline-info") }}
+    </div>
+  </form>
+</div>
+
+{% endblock %}

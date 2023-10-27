@@ -1,12 +1,18 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
+from flask_login import LoginManager
 
 app = Flask(__name__)
-app.config['SECRET_KEY']= 'secret_key_33'
-app.config['SQLALCHEMY_DATABASE_URI']= 'sqlite:///base.db' # path to data base
 
-db = SQLAlchemy(app)  # data base created
+app.config['SECRET_KEY']='secret_key_33'
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///base2.db"
 
-import readaholic.routes # earlier routes were just below data base 
-                         # to import routes in app import routes here
+db = SQLAlchemy(app)
+bcrypt = Bcrypt(app)
+
+login_manager = LoginManager(app)
+login_manager.login_view = 'login'
+login_manager.login_message_category = 'info'
+
+import readaholic.routes

@@ -1,27 +1,37 @@
-from readaholic import db
+from readaholic import db, login_manager
+from flask_login import UserMixin
 
+@login_manager.user_loader
+def load_user(id):
+    return User.query.get(id)
 
-# here we are converting table having three columns of different
-# data type into code.
-
-class User(db.Model):   # create first intity 
-    id = db.Column(db.Integer, primary_key = True)   # to tell that no two can have same id
-    email = db.Column(db.String(60), nullable= False) # email can not be null
-    password = db.Column(db.String(32), nullable = False)  
-
-    def __reper__(self):
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(60), nullable=False)
+    password = db.Column(db.String(32), nullable=False)
+    
+    def __repr__(self):
         return f"User(email: {self.email})"
     
 class Book(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    title= db.Column(db.String(120), nullable= False)  #title is must
-    isbn = db.Column(db.Integer, unique= True, nullable= False)
-    shop_link = db.Column(db.String(120), nullable= True)  #optional
-    author = db.Column(db.String(60), nullable = False)
-    gener = db.Column(db.String(60), nullable= False)
-    rating= db.Column(db.Float, nullable= False)
-    image = db.Column(db.String(120), nullable = True, default= "default.jpg")
-    tiny_summry = db.Column(db.Text, nullable = False) # special type
-   
-    def __reper__(self):
-        return f"Book(title: {self.title}, isbn:{ self.isbn})"
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(130), nullable=False)
+    author = db.Column(db.String(120), nullable=False)
+    isbn = db.Column(db.Integer, unique=True, nullable=False)
+    genre = db.Column(db.String(60), nullable=False)
+    shop_link = db.Column(db.String(120), nullable=True)
+    rating = db.Column(db.Float, nullable=False)
+    image = db.Column(db.String(120), nullable=True, default="default.jpg")
+    tiny_summary = db.Column(db.Text, nullable=False)
+
+    def __repr__(self):
+        return f"Book(title: {self.title}, isbn: {self.isbn})"
+
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name= db.Column(db.String(120), nullable=False)
+    email= db.Column(db.String(60), nullable=False)
+    comment= db.Column(db.Text, nullable=False)
+
+    def __repr__(self):
+        return f"Comment(email: {self.email})"
